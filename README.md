@@ -13,7 +13,7 @@ if you want to play go to this link -> [Snake-game](https://divysoni03.github.io
 ![image](https://github.com/user-attachments/assets/480d65e1-1e25-401b-9325-05754c858b18)
 
 # Mobile View
-![WhatsApp Image 2024-11-18 at 13 28 21_2d9bf680](https://github.com/user-attachments/assets/3a60a3d5-1c05-4719-930f-3acb22a3b329){width=500}
-![WhatsApp Image 2024-11-18 at 13 28 22_d5bd8bca](https://github.com/user-attachments/assets/8afc803d-6a34-466d-9690-4fc0a153d169){width=500}
+![homepage-snakegame](https://github.com/user-attachments/assets/a4ec6003-eabd-4303-8fd1-56bf7b4d098d)
+![mainpage-snakegame](https://github.com/user-attachments/assets/01b98b28-1755-46ea-a1f8-45a5bcf37969)
 
 # Thank you for visiting, ENJOY..
