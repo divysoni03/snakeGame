@@ -1,6 +1,24 @@
 let highestScoreDiv = document.querySelector(".highestScore");
 let highestScore = 0;
 
+let ticking = 150;
+
+let startX=0;
+let startY=0;
+let endX=0;
+let endY=0;
+
+let startPage = document.querySelector(".startPage");
+
+let light = document.querySelector(".lightDiff");
+let med = document.querySelector(".medDiff");
+let max = document.querySelector(".maxDiff");
+
+light.addEventListener("click", lightGame);
+med.addEventListener("click", medGame);
+max.addEventListener("click", maxGame);
+
+const gameContainer = document.querySelector(".gameContainer");
 const gameBoard = document.querySelector(".gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector(".scoreText");
@@ -9,7 +27,7 @@ const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 
 // colors
-const boardBackground = "white";
+const boardBackground = "greenYellow";
 const snakeColor = "lightGreen";
 const snakeBorder = "black";
 const foodColor = "red";
@@ -38,7 +56,24 @@ let snake = [
 window.addEventListener("keydown", changeDirection);
 resetBtn.addEventListener("click", resetGame);
 
-startGame(); // function to start the game
+// startGame(); // function to start the game
+function lightGame() {
+    startPage.style.display = "none";
+    gameContainer.style.display = "block";
+    startGame();
+}
+function medGame() {
+    ticking = 100; 
+    startPage.style.display = "none";
+    gameContainer.style.display = "block";
+    startGame();
+}
+function maxGame() {
+    ticking = 75;
+    startPage.style.display = "none";
+    gameContainer.style.display = "block";
+    startGame();
+}
 
 // making function that we need
 function startGame() {
@@ -58,7 +93,7 @@ function nextTick() {
             drawSnake();
             checkGameOver();
             nextTick();
-        },  100);
+        },  ticking);
     }
     else {
         displayGameOver(); //if game is not running then the game is over
@@ -110,6 +145,35 @@ function drawSnake() {
     });
 }
 
+function getDirection() {
+    body.addEventListener("touchstart", (event) => {
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+    });
+
+    body.addEventListener("touchend", (event) => {
+        endX = event.changedTouches[0].clientX;
+        endY = event.changedTouches[0].clientY;
+    })
+
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 30) {
+            return "right";
+        } else if (diffX < -30) {
+            return "left";
+        }
+    } else {
+        if (diffY > 30) {
+            return "down";
+        } else if (diffY < -30) {
+            return "up";
+        }
+    }
+}
+
 function changeDirection(event) {
     const keyPressed = event.keyCode; // this will give us the code of the key that we pressed
     
@@ -125,24 +189,28 @@ function changeDirection(event) {
     const goingRight = (xVelocity == unitSize);
     const goingDown = (yVelocity == unitSize);
 
+
+    // for mobile version
+    let direction = getDirection();
+
     // switch case
     switch(true) { // checking for true
 
         // checking if the keyPressed is for left and we are not going right currently
         // because from the game rule we can't move in opposite direction from where are we going
-        case (keyPressed == LEFT && !goingRight):
+        case (((keyPressed == LEFT) || (direction == "left")) && !goingRight):
             xVelocity = -unitSize;
             yVelocity = 0;
             break;
-        case (keyPressed == RIGHT && !goingLeft):
+        case (((keyPressed == RIGHT) || (direction == "right")) && !goingLeft):
             xVelocity = unitSize;
             yVelocity = 0;
             break;
-        case (keyPressed == UP && !goingDown):
+        case (((keyPressed == UP) || (direction == "up")) && !goingDown):
             xVelocity = 0;
             yVelocity = -unitSize;
             break;
-        case (keyPressed == DOWN && !goingUp):
+        case (((keyPressed == DOWN) || (direction == "down")) && !goingUp):
             xVelocity = 0;
             yVelocity = unitSize;
             break;

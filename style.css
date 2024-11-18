@@ -2,16 +2,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow-y: hidden;
+    user-select: none;
+}
+
+body {
+    /* background-image: linear-gradient(180deg, #FFFFFF, #6284FF,#FF0000); */
+    background-color: green;
 }
 
 .gameContainer {
     text-align: center;
+    display: none;
 }
 
 .gameBoard {
     margin: 10px;
     border: 3px solid black;
+    background-color: greenyellow;
 }
 
 .score {
@@ -20,13 +27,16 @@
 }
 
 .resetButton {
-    padding: 15px 60px;
+    padding: 10px 50px;
     border: 2px solid black;
     border-radius: 12px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 16px;
+    font-size: 1.3rem;
     font-weight: bolder;
     cursor: pointer;
+
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .scoreContainer {
@@ -35,4 +45,58 @@
     gap: 50px;
     justify-content: center;
     margin-bottom: 10px;
+}
+
+.startPage {
+    background-color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.startPage h1 {
+    font-size: 2.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: lightcoral;
+    text-shadow: 2px 2px 0px red, -1px -1px 0px red;
+    padding: 30px;
+    border: 1px solid green;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+.startPage button {
+    padding: 10px 15px;
+    border: 2px solid #6284FF;
+    border-radius: 8px;
+    box-shadow: 1px 2px 0px #6284FF;
+    transition: all .3s;
+    margin-bottom: 20px;
+}
+.startPage button:active {
+    border-radius: 3px;
+    box-shadow: 0px 0px 0px;
+    transform: translate(2px, 2px);
+}
+.startPage button:not(:active) {
+    border-radius: 8px;
+    box-shadow: 1px 2px 0px #6284FF;
+}
+.startPage button:focus {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width:600px) {
+    .gameContainer {
+        margin-top: 75px;
+    }
+    .gameBoard {
+        width: 275px;
+        height: 275px;
+    }
+    .score {
+        font-size: 1.2rem;
+        padding: 10px;
+    }
 }
