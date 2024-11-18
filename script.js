@@ -145,34 +145,43 @@ function drawSnake() {
     });
 }
 
-function getDirection() {
-    body.addEventListener("touchstart", (event) => {
-        startX = event.touches[0].clientX;
-        startY = event.touches[0].clientY;
-    });
+const body = document.body; // Define body
 
-    body.addEventListener("touchend", (event) => {
-        endX = event.changedTouches[0].clientX;
-        endY = event.changedTouches[0].clientY;
-    })
+body.addEventListener("touchstart", (event) => {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+});
+
+body.addEventListener("touchend", (event) => {
+    endX = event.changedTouches[0].clientX;
+    endY = event.changedTouches[0].clientY;
 
     const diffX = endX - startX;
     const diffY = endY - startY;
 
     if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 30) {
-            return "right";
-        } else if (diffX < -30) {
-            return "left";
+        if (diffX > 30 && xVelocity !== -unitSize) {
+            // Swipe right
+            xVelocity = unitSize;
+            yVelocity = 0;
+        } else if (diffX < -30 && xVelocity !== unitSize) {
+            // Swipe left
+            xVelocity = -unitSize;
+            yVelocity = 0;
         }
     } else {
-        if (diffY > 30) {
-            return "down";
-        } else if (diffY < -30) {
-            return "up";
+        if (diffY > 30 && yVelocity !== -unitSize) {
+            // Swipe down
+            xVelocity = 0;
+            yVelocity = unitSize;
+        } else if (diffY < -30 && yVelocity !== unitSize) {
+            // Swipe up
+            xVelocity = 0;
+            yVelocity = -unitSize;
         }
     }
-}
+});
+
 
 function changeDirection(event) {
     const keyPressed = event.keyCode; // this will give us the code of the key that we pressed
@@ -189,28 +198,24 @@ function changeDirection(event) {
     const goingRight = (xVelocity == unitSize);
     const goingDown = (yVelocity == unitSize);
 
-
-    // for mobile version
-    let direction = getDirection();
-
     // switch case
     switch(true) { // checking for true
 
         // checking if the keyPressed is for left and we are not going right currently
         // because from the game rule we can't move in opposite direction from where are we going
-        case (((keyPressed == LEFT) || (direction == "left")) && !goingRight):
+        case (keyPressed == LEFT && !goingRight):
             xVelocity = -unitSize;
             yVelocity = 0;
             break;
-        case (((keyPressed == RIGHT) || (direction == "right")) && !goingLeft):
+        case (keyPressed == RIGHT && !goingLeft):
             xVelocity = unitSize;
             yVelocity = 0;
             break;
-        case (((keyPressed == UP) || (direction == "up")) && !goingDown):
+        case (keyPressed == UP && !goingDown):
             xVelocity = 0;
             yVelocity = -unitSize;
             break;
-        case (((keyPressed == DOWN) || (direction == "down")) && !goingUp):
+        case (keyPressed == DOWN && !goingUp):
             xVelocity = 0;
             yVelocity = unitSize;
             break;
